@@ -27,13 +27,13 @@ Gate-level quantum circuits and Clifford+T resource estimates for **QARMA-64**, 
 
 ```
 ├── search/              # AGL(4,2) coset search: proves S-box Toffoli-count minimality
-├── circuits/
-│   ├── sboxes/          # σ0, σ1, σ2, σ2⁻¹ — LIGHTER-R source + AND-gadget rewrites
-│   ├── mixcolumns/      # In-place MixColumns synthesis (24 CNOT/column, depth 6)
-│   └── gadgets/         # AND-compute / AND-uncompute, verified against Qualtran's And() bloq
+├── latex/                # Complete research paper (LaTeX source, figures)
 ├── cipher/              # Full QARMA-64 encryption circuit (Algorithm 1), both compilation modes
 ├── grover/              # Oracle, comparator AND-tree, diffusion operator
 ├── verify/              # Test-vector checks, gadget unitarity checks, known-answer coset tests
+coset tests
+├── lighter-r/            # LIGHTER-R reference source/tooling
+├── RevKit/               # RevKit reference source/tooling
 ```
 
 ## Scope and honest limitations
