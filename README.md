@@ -33,9 +33,7 @@ Gate-level quantum circuits and Clifford+T resource estimates for **QARMA-64**, 
 │   └── gadgets/         # AND-compute / AND-uncompute, verified against Qualtran's And() bloq
 ├── cipher/              # Full QARMA-64 encryption circuit (Algorithm 1), both compilation modes
 ├── grover/              # Oracle, comparator AND-tree, diffusion operator
-├── qasm/                # OpenQASM 2.0 exports for every circuit above
 ├── verify/              # Test-vector checks, gadget unitarity checks, known-answer coset tests
-└── scripts/             # Regenerates every table and figure in the paper from scratch
 ```
 
 ## Scope and honest limitations
