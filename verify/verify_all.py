@@ -1,7 +1,3 @@
-"""Run the complete verification suite and write results.json + VERIFICATION.md.
-
-Every number quoted in the paper comes from this run.
-"""
 import io
 import json
 import math
@@ -50,14 +46,14 @@ def main():
     log('QARMA-64 quantum resource estimation -- verification report')
     log('run: %s' % time.strftime('%Y-%m-%d %H:%M:%S'))
 
-    # ---------------------------------------------------------------- 1. reference cipher
+    # 1. reference cipher
     section('1. Classical reference implementation')
     check('structural self-tests (involutions, M^2=I, tweak update invertible)', ref.self_test())
     bad = ref.check_test_vectors()
     check('all 9 published test vectors reproduced (sigma_0/1/2 x r=5,6,7)', not bad, str(bad))
     R['test_vectors'] = {'%d_%d' % k: '%016x' % v for k, v in ref.TV_CIPHER.items()}
 
-    # ---------------------------------------------------------------- 2. gadget verification
+    # 2. gadget verification
     section('2. Gidney AND gadget and Toffoli decompositions')
     buf = io.StringIO()
     with redirect_stdout(buf):
@@ -66,7 +62,7 @@ def main():
         log('  ' + line)
     R['gadget_report'] = buf.getvalue()
 
-    # ---------------------------------------------------------------- 3. S-box search results
+    # 3. S-box search results
     section('3. Minimum-Toffoli S-box search')
     sols = json.load(open(os.path.join(DATA, 'sbox_solutions.json')))
     R['search'] = dict(levels=sols['levels'], generators=sols['generators'],
@@ -112,7 +108,7 @@ def main():
             % (SB_NAMES[sb], sum(1 for x in g if x[0] == 'ccx'), len(pairs), len(rej),
                '; '.join(sorted(set(r[2] for r in rej)))))
 
-    # ---------------------------------------------------------------- 5. MixColumns
+    #  5. MixColumns
     section('5. MixColumns')
     import mixcolumns as mixmod
     M = mixmod.probe_matrix()
@@ -125,7 +121,7 @@ def main():
     log('  one column: %d CNOT, depth %d; full layer: %d CNOT'
         % (len(mix['cnots']), m_mix['NCT_depth'], 4 * len(mix['cnots'])))
 
-    # ---------------------------------------------------------------- 6. full cipher
+    #  6. full cipher
     section('6. Full QARMA-64 encryption circuit')
     R['encryption'] = {}
     for kind in ('min', 'revkit'):
@@ -162,7 +158,7 @@ def main():
     check('draft claim reproduced: full-cipher T-count 8960 for sigma_1/r=7 ancilla-free',
           e0['T'] == 8960, 'got %d' % e0['T'])
 
-    # ---------------------------------------------------------------- 7. Grover
+    #  7. Grover
     section('7. Grover oracle and diffusion')
     p, iters, nmeas, nq = grover.toy_grover_test(nkey=6, marked=37, seed=3, gadget=True)
     p_plain, _, _, _ = grover.toy_grover_test(nkey=6, marked=37, seed=3, gadget=False)
@@ -189,7 +185,7 @@ def main():
             log('  iteration (%-4s, %d pairs): %d qubits, T=%d, T-depth=%d, depth=%d'
                 % (gadget, pairs, m['qubits'], m['T'], m['T_depth'], m['CT_depth']))
 
-    # ---------------------------------------------------------------- 8. attack cost
+    #  8. attack cost
     section('8. Grover key-search cost')
     from decimal import Decimal, getcontext
     getcontext().prec = 60
