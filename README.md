@@ -10,7 +10,7 @@ Gate-level quantum circuits and Clifford+T resource estimates for **QARMA-64**, 
 3. **A complete, verified QARMA-64 encryption circuit** — S-boxes, MixColumns, tweak schedule, key specialization — reproducing all nine published test vectors across every S-box/round/mode combination.
 4. **A working Grover key-search oracle**, cost out under both the textbook and AND-gadget compilation modes, plus NIST `maxdepth`-limited attack scenarios.
 
-## Headline numbers
+## Findings
 
 | | Textbook (7T Toffoli) | AND-gadget everywhere |
 |---|---|---|
@@ -37,13 +37,6 @@ Gate-level quantum circuits and Clifford+T resource estimates for **QARMA-64**, 
 ├── verify/              # Test-vector checks, gadget unitarity checks, known-answer coset tests
 └── scripts/             # Regenerates every table and figure in the paper from scratch
 ```
-
-## Verification (what's actually checked, not just claimed)
-
-- **S-boxes**: all 16 inputs, ancillas confirmed returned to |0⟩, checked as an exact unitary (not just on classical basis states) — AND-compute verified exact (amplitude +1, all four |a,b,0⟩ inputs); AND-uncompute verified to restore the input state in *both* measurement branches.
-- **AND-gadget eligibility**: a compute/uncompute pair is only rewritten if simulation confirms, for every input, that the target is |0⟩ before compute and returns to |0⟩ after uncompute with the controls unchanged in between — never assumed from inspecting the gate list.
-- **Full cipher**: 39 configurations (S-box × round count × gadget mode × classical/quantum tweak × RevKit baseline) each reproduce the correct published ciphertext, with key/tweak/ancilla registers confirmed restored.
-- **Grover oracle**: marks the correct key and no other; a small end-to-end run reaches success probability 0.9966, independent of which random measurement outcomes occurred along the way.
 
 ## Scope and honest limitations
 
